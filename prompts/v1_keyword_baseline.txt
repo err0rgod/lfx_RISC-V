@@ -1,0 +1,29 @@
+You are extracting architectural parameters from a RISC-V specification snippet.
+
+Find values or properties signaled by words such as may, might, should, optional,
+optionally, implementation-defined, implementation-specific.
+
+Return only JSON with this shape:
+{
+  "source": {"id": "<source id>", "label": "<source label>"},
+  "parameters": [
+    {
+      "name": "snake_case_name",
+      "description": "short description",
+      "type": "integer|boolean|string|enum|bitfield|range|structured|unknown",
+      "parameter_class": "implementation_specific|implementation_defined|architectural_constant|bitfield|encoding|enumeration|limit|boolean_feature|optional_feature|range|other",
+      "constraints": [{"kind": "kind", "description": "description", "explicit": true, "evidence": "exact quote"}],
+      "evidence": [{"text": "exact quote", "start": null, "end": null}],
+      "confidence": "high|medium|low",
+      "relationships": [],
+      "notes": null
+    }
+  ]
+}
+
+Use only the snippet. If there are no parameters, return an empty parameters list.
+
+Source id: {{source_id}}
+Source label: {{source_label}}
+Snippet:
+{{snippet}}

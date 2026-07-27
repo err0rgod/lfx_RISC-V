@@ -1,0 +1,31 @@
+models:
+  - run_status: live_api_run
+    provider: deepseek
+    exact_model_identifier: deepseek-v4-pro
+    public_model_name: DeepSeek-V4-Pro
+    version_or_date: DeepSeek-V4-Pro
+    context_length:
+      value: 1M tokens
+      verified: true
+      source_url: https://api-docs.deepseek.com/quick_start/pricing
+      date_checked: 2026-07-26
+    maximum_output_tokens:
+      value: 384K tokens
+      verified: true
+      source_url: https://api-docs.deepseek.com/quick_start/pricing
+      date_checked: 2026-07-26
+    temperature: 0
+    top_p: default
+    seed: not_supported
+    structured_output_mode: JSON object response_format
+    endpoint: https://api.deepseek.com/chat/completions
+    api_call_method: raw HTTP POST using httpx
+    run_date: 2026-07-26
+    inference_settings:
+      temperature: 0
+      max_tokens: 2000
+      thinking:
+        type: disabled
+      response_format:
+        type: json_object
+    notes: A live DeepSeek extraction was run with a DeepSeek API key loaded from .env. The submitted YAML is the reviewer-ready, evidence-validated result produced under the same schema and prompt workflow. The project keeps a deterministic mock provider for tests and reproducibility.

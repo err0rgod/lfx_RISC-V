@@ -1,0 +1,272 @@
+sources:
+  - id: privileged-spec-19.3.1
+    label: Privileged Spec 19.3.1
+    text: |-
+      Caches organize copies of data into cache blocks, each of which represents a contiguous, naturally aligned power-of-two (or NAPOT) range of memory locations. A cache block is identified by any of the physical addresses corresponding to the underlying memory locations. The capacity and organization of a cache and the size of a cache block are both implementation-specific, and the execution environment provides software a means to discover information about the caches and cache blocks in a system. In the initial set of CMO extensions, the size of a cache block shall be uniform throughout the system.
+    parameters:
+      - name: cache_capacity
+        display_name: Cache capacity
+        description: Capacity of a cache, identified as implementation-specific.
+        type: integer
+        parameter_class: implementation_specific
+        constraints:
+          - kind: implementation_specific
+            description: The capacity of a cache is implementation-specific.
+            explicit: true
+            evidence: "The capacity and organization of a cache and the size of a cache block are both implementation-specific"
+          - kind: software_discoverability
+            description: Software is provided a means to discover cache information by the execution environment.
+            explicit: true
+            evidence: "the execution environment provides software a means to discover information about the caches and cache blocks in a system"
+        evidence:
+          - text: "The capacity and organization of a cache and the size of a cache block are both implementation-specific"
+            start: null
+            end: null
+        confidence: high
+        relationships: []
+        notes: The snippet does not state units, legal values, or numeric limits for capacity.
+        annotation_reasoning: Capacity is named with implementation-specific status. The discovery sentence is attached as a discoverability constraint because it applies to cache information.
+      - name: cache_organization
+        display_name: Cache organization
+        description: Organization of a cache, identified as implementation-specific.
+        type: structured
+        parameter_class: implementation_specific
+        constraints:
+          - kind: implementation_specific
+            description: The organization of a cache is implementation-specific.
+            explicit: true
+            evidence: "The capacity and organization of a cache and the size of a cache block are both implementation-specific"
+          - kind: software_discoverability
+            description: Software is provided a means to discover cache information by the execution environment.
+            explicit: true
+            evidence: "the execution environment provides software a means to discover information about the caches and cache blocks in a system"
+        evidence:
+          - text: "The capacity and organization of a cache and the size of a cache block are both implementation-specific"
+            start: null
+            end: null
+        confidence: high
+        relationships: []
+        notes: The snippet does not define organization categories.
+        annotation_reasoning: Organization can vary independently from capacity and block size, so it is separate.
+      - name: cache_block_size
+        display_name: Cache block size
+        description: Size of the contiguous memory range represented by a cache block.
+        type: integer
+        parameter_class: implementation_specific
+        constraints:
+          - kind: implementation_specific
+            description: The size of a cache block is implementation-specific.
+            explicit: true
+            evidence: "The capacity and organization of a cache and the size of a cache block are both implementation-specific"
+          - kind: contiguous_range
+            description: A cache block represents a contiguous range of memory locations.
+            explicit: true
+            evidence: "contiguous, naturally aligned power-of-two (or NAPOT) range of memory locations"
+          - kind: natural_alignment
+            description: The represented cache-block memory range is naturally aligned.
+            explicit: true
+            evidence: "naturally aligned power-of-two (or NAPOT) range of memory locations"
+          - kind: power_of_two_or_napot
+            description: The represented cache-block memory range is power-of-two or NAPOT.
+            explicit: true
+            evidence: "power-of-two (or NAPOT) range of memory locations"
+          - kind: uniformity
+            description: In the initial set of CMO extensions, cache-block size shall be uniform throughout the system.
+            explicit: true
+            evidence: "the size of a cache block shall be uniform throughout the system"
+          - kind: software_discoverability
+            description: Software is provided a means to discover cache-block information by the execution environment.
+            explicit: true
+            evidence: "the execution environment provides software a means to discover information about the caches and cache blocks in a system"
+        evidence:
+          - text: "contiguous, naturally aligned power-of-two (or NAPOT) range of memory locations"
+            start: null
+            end: null
+          - text: "The capacity and organization of a cache and the size of a cache block are both implementation-specific"
+            start: null
+            end: null
+          - text: "the size of a cache block shall be uniform throughout the system"
+            start: null
+            end: null
+        confidence: high
+        relationships: []
+        notes: The power-of-two/NAPOT wording is attached to cache-block size, not cache capacity.
+        annotation_reasoning: Block size is implementation-specific; the shape/alignment and uniformity statements constrain this parameter.
+      - name: cache_information_discoverability
+        display_name: Cache information discoverability
+        description: Architectural requirement that the execution environment provides software a way to discover cache and cache-block information.
+        type: boolean
+        parameter_class: other
+        constraints:
+          - kind: execution_environment_provides_mechanism
+            description: The execution environment provides software a means to discover cache and cache-block information.
+            explicit: true
+            evidence: "the execution environment provides software a means to discover information about the caches and cache blocks in a system"
+        evidence:
+          - text: "the execution environment provides software a means to discover information about the caches and cache blocks in a system"
+            start: null
+            end: null
+        confidence: medium
+        relationships:
+          - kind: related_to
+            target: cache_capacity
+            description: Discovery covers information about caches.
+            evidence: "discover information about the caches and cache blocks"
+          - kind: related_to
+            target: cache_block_size
+            description: Discovery covers information about cache blocks.
+            evidence: "discover information about the caches and cache blocks"
+        notes: Modeled separately and also referenced as a discoverability constraint to make the design decision explicit.
+        annotation_reasoning: This is not a numeric parameter, but it is a source-supported architectural property affecting how implementation-specific information is exposed.
+  - id: privileged-spec-2.1
+    label: Privileged Spec 2.1
+    text: |-
+      "Conventional" R/W accessibility of CSRs according to address mapping
+      The standard RISC-V ISA sets aside a 12-bit encoding space (csr[11:0]) for up to 4,096 CSRs. By convention, the upper 4 bits of the CSR address (csr[11:8]) are used to encode the read and write accessibility of the CSRs according to privilege level as shown in Table 1. The top two bits (csr[11:10]) indicate whether the register is read/write (00,01, or 10) or read-only (11). The next two bits (csr[9:8]) encode the lowest privilege level that can access the CSR.
+    parameters:
+      - name: csr_address_width
+        display_name: CSR address width
+        description: Width of the CSR address encoding space.
+        type: integer
+        parameter_class: architectural_constant
+        constraints:
+          - kind: width_bits
+            description: The CSR address encoding space is 12 bits wide.
+            explicit: true
+            evidence: "12-bit encoding space (csr[11:0])"
+          - kind: bit_range
+            description: The CSR address is represented as csr[11:0].
+            explicit: true
+            evidence: "csr[11:0]"
+        evidence:
+          - text: "12-bit encoding space (csr[11:0])"
+            start: null
+            end: null
+        confidence: high
+        relationships:
+          - kind: contains
+            target: csr_accessibility_field
+            description: The CSR address contains the upper accessibility field.
+            evidence: "upper 4 bits of the CSR address (csr[11:8])"
+        notes: No privilege-value meanings are inferred beyond the snippet.
+        annotation_reasoning: The 12-bit CSR address space is an architectural constant explicitly stated in the snippet.
+      - name: csr_encoding_space_capacity
+        display_name: CSR encoding-space capacity
+        description: Maximum number of CSRs supported by the 12-bit encoding space.
+        type: integer
+        parameter_class: limit
+        constraints:
+          - kind: maximum_count
+            description: The encoding space allows up to 4,096 CSRs.
+            explicit: true
+            evidence: "up to 4,096 CSRs"
+        evidence:
+          - text: "up to 4,096 CSRs"
+            start: null
+            end: null
+        confidence: high
+        relationships:
+          - kind: derived_from
+            target: csr_address_width
+            description: The snippet presents the count as part of the 12-bit encoding space statement.
+            evidence: "12-bit encoding space (csr[11:0]) for up to 4,096 CSRs"
+        notes: Represented as encoding-space capacity rather than a separate implementation choice.
+        annotation_reasoning: The phrase "up to 4,096 CSRs" is a limit; it is not double-counted as a separate field width.
+      - name: csr_accessibility_field
+        display_name: CSR accessibility field
+        description: Composite upper CSR-address field used to encode read/write accessibility according to privilege level.
+        type: bitfield
+        parameter_class: bitfield
+        constraints:
+          - kind: width_bits
+            description: The accessibility field uses the upper 4 bits.
+            explicit: true
+            evidence: "upper 4 bits of the CSR address (csr[11:8])"
+          - kind: bit_range
+            description: The accessibility field is csr[11:8].
+            explicit: true
+            evidence: "csr[11:8]"
+          - kind: encodes_accessibility
+            description: The field encodes read and write accessibility of CSRs according to privilege level.
+            explicit: true
+            evidence: "encode the read and write accessibility of the CSRs according to privilege level"
+        evidence:
+          - text: "upper 4 bits of the CSR address (csr[11:8])"
+            start: null
+            end: null
+        confidence: high
+        relationships:
+          - kind: contains
+            target: csr_read_write_access_field
+            description: The composite field includes the top two-bit read/write field.
+            evidence: "The top two bits (csr[11:10])"
+          - kind: contains
+            target: csr_lowest_privilege_access_field
+            description: The composite field includes the next two-bit lowest-privilege field.
+            evidence: "The next two bits (csr[9:8])"
+        notes: Kept as a composite field with subfield relationships, not an independent implementation choice.
+        annotation_reasoning: The composite field is meaningful because the snippet names csr[11:8] as the accessibility encoding region; subfields are linked to avoid duplicate interpretation.
+      - name: csr_read_write_access_field
+        display_name: CSR read/write access field
+        description: Top two CSR address bits indicating whether a CSR is read/write or read-only.
+        type: enum
+        parameter_class: encoding
+        constraints:
+          - kind: width_bits
+            description: The field uses the top two bits.
+            explicit: true
+            evidence: "The top two bits (csr[11:10])"
+          - kind: bit_range
+            description: The field is csr[11:10].
+            explicit: true
+            evidence: "csr[11:10]"
+          - kind: read_write_values
+            description: Values 00, 01, or 10 indicate read/write.
+            explicit: true
+            evidence: "read/write (00,01, or 10)"
+          - kind: read_only_value
+            description: Value 11 indicates read-only.
+            explicit: true
+            evidence: "read-only (11)"
+        evidence:
+          - text: "The top two bits (csr[11:10]) indicate whether the register is read/write (00,01, or 10) or read-only (11)"
+            start: null
+            end: null
+        confidence: high
+        relationships:
+          - kind: subfield_of
+            target: csr_accessibility_field
+            description: This is a subfield of the upper accessibility field.
+            evidence: "upper 4 bits of the CSR address (csr[11:8])"
+        notes: Values are recorded exactly as shown; no extra CSR access semantics are added.
+        annotation_reasoning: This field has explicit value meanings, so it is represented as an encoding enum.
+      - name: csr_lowest_privilege_access_field
+        display_name: CSR lowest-privilege access field
+        description: Next two CSR address bits encoding the lowest privilege level that can access the CSR.
+        type: bitfield
+        parameter_class: bitfield
+        constraints:
+          - kind: width_bits
+            description: The field uses the next two bits.
+            explicit: true
+            evidence: "The next two bits (csr[9:8])"
+          - kind: bit_range
+            description: The field is csr[9:8].
+            explicit: true
+            evidence: "csr[9:8]"
+          - kind: encodes_lowest_privilege_level
+            description: The field encodes the lowest privilege level that can access the CSR.
+            explicit: true
+            evidence: "encode the lowest privilege level that can access the CSR"
+        evidence:
+          - text: "The next two bits (csr[9:8]) encode the lowest privilege level that can access the CSR"
+            start: null
+            end: null
+        confidence: high
+        relationships:
+          - kind: subfield_of
+            target: csr_accessibility_field
+            description: This is a subfield of the upper accessibility field.
+            evidence: "upper 4 bits of the CSR address (csr[11:8])"
+        notes: The snippet does not define privilege-level value meanings.
+        annotation_reasoning: The bit range and purpose are explicit, but the value mapping is omitted because it is not included in the snippet.

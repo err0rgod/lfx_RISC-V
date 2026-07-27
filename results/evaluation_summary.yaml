@@ -1,0 +1,35 @@
+per_source:
+- parameter_precision: 1.0
+  parameter_recall: 1.0
+  parameter_f1: 1.0
+  type_accuracy: 1.0
+  parameter_class_accuracy: 1.0
+  constraint_precision: 1.0
+  constraint_recall: 1.0
+  evidence_validity: 1.0
+  duplicate_rate: 0.0
+  unsupported_claim_count: 0
+  malformed_output_count: 0
+- parameter_precision: 1.0
+  parameter_recall: 1.0
+  parameter_f1: 1.0
+  type_accuracy: 1.0
+  parameter_class_accuracy: 1.0
+  constraint_precision: 1.0
+  constraint_recall: 1.0
+  evidence_validity: 1.0
+  duplicate_rate: 0.0
+  unsupported_claim_count: 0
+  malformed_output_count: 0
+aggregate:
+  parameter_precision: 1.0
+  parameter_recall: 1.0
+  parameter_f1: 1.0
+  type_accuracy: 1.0
+  parameter_class_accuracy: 1.0
+  constraint_precision: 1.0
+  constraint_recall: 1.0
+  evidence_validity: 1.0
+  duplicate_rate: 0.0
+  unsupported_claim_count: 0.0
+  malformed_output_count: 0.0
