@@ -1,0 +1,33 @@
+RISC-V Parameter Extractor - Submission Guide
+
+This project is a submission for the LFX Mentorship coding challenge:
+"AI-assisted extraction of architectural parameters from RISC-V specifications".
+
+Start here:
+1. README.md
+   High-level project overview, file guide, approach, commands, and validation notes.
+
+2. submission/coding_challenge_submission.md
+   Main reviewer-facing explanation of the LLM used, prompt development,
+   hallucination controls, results, and reproduction steps.
+
+3. submission/results.yaml
+   Final extracted architectural parameters in the requested YAML format.
+
+4. prompts/final_prompt.txt
+   Final evidence-grounded prompt used for extraction.
+
+5. src/riscv_parameter_extractor/validation.py
+   Validation logic that checks exact evidence, schema correctness, source metadata,
+   duplicates, and bit ranges.
+
+Quick validation commands:
+python -m riscv_parameter_extractor validate --results-path submission/results.yaml
+python -m riscv_parameter_extractor evaluate --results-path submission/results.yaml
+python -m pytest -p no:cacheprovider
+
+Core idea:
+The LLM extracts structured JSON from each supplied RISC-V snippet. The code then
+validates the output and the final reviewer-ready YAML is stored in
+submission/results.yaml. Every explicit parameter or constraint is tied to exact
+evidence from the supplied snippets.

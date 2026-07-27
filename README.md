@@ -177,15 +177,15 @@ python -m pip install -e ".[dev]"
 
 The project works without an API key by using the deterministic mock provider.
 
-For a live DeepSeek run, create a local `.env` file from `.env.example`:
+For a live DeepSeek run, the local `.env` file uses these keys:
 
 ```env
-DEEPSEEK_API_KEY=your_key_here
+DEEPSEEK_API_KEY=
 RISCV_EXTRACT_PROVIDER=deepseek
 RISCV_EXTRACT_MODEL=deepseek-v4-pro
 ```
 
-Do not commit `.env`.
+The local `.env` file is excluded by `.gitignore`.
 
 ## Commands
 
